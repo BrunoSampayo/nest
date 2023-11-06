@@ -17,7 +17,7 @@ model User {
   cpf            String   @unique
   birthday       DateTime 
   address_street String
-  address_number String
+  address_number Int
   address_district  String
   rents          Rent[]
 

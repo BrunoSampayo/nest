@@ -10,15 +10,31 @@ export class PersonService {
   constructor (private prisma:PrismaService){}
   
  async create(createPersonDto: CreatePersonDto) {
-    const exist = await this.prisma.user.findFirstOrThrow({
-      where:{
-        cpf: createPersonDto.cpf
+    try{
+      const userAlreadyExists = await this.prisma.user.findFirstOrThrow({
+        where:{cpf:createPersonDto.cpf}
+      })
+      if(userAlreadyExists.cpf){
+        return {
+          statusCode: 404,
+          message:"User already exists"
+        }
       }
-    })
+      const user = await this.prisma.user.create({
+        data:createPersonDto
+      });
+    }
+    catch(err){
+
+    }
+    
+    
+    return user
     
   }
 
   findAll() {
+    
     return `This action returns all person`;
   }
 
