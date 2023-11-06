@@ -1,4 +1,5 @@
-import {IsString,Validate,IsNotEmpty, IsDate, ValidatorConstraint, ValidatorConstraintInterface, ValidationArguments} from 'class-validator'
+import { Type } from 'class-transformer';
+import {IsString,Validate,IsNotEmpty, IsDate} from 'class-validator'
 import { IsCpf } from 'src/validators/cpf.custom.validador';
 
 
@@ -12,8 +13,8 @@ export class CreatePersonDto {
     @Validate(IsCpf)
     cpf:string;
 
+    @Type(() => Date)
     @IsDate()
-    @IsNotEmpty()
     birthday:Date;
 
     @IsString()

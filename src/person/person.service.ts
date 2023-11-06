@@ -2,14 +2,20 @@ import { Injectable } from '@nestjs/common';
 import { CreatePersonDto } from './dto/create-person.dto';
 import { UpdatePersonDto } from './dto/update-person.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { error } from 'console';
 
 @Injectable()
 export class PersonService {
 
+  constructor (private prisma:PrismaService){}
   
-  
-  create(createPersonDto: CreatePersonDto) {
-    return 'This action adds a new person';
+ async create(createPersonDto: CreatePersonDto) {
+    const exist = await this.prisma.user.findFirstOrThrow({
+      where:{
+        cpf: createPersonDto.cpf
+      }
+    })
+    
   }
 
   findAll() {
