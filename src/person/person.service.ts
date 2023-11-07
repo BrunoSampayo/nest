@@ -7,34 +7,21 @@ import { error } from 'console';
 @Injectable()
 export class PersonService {
 
-  constructor (private prisma:PrismaService){}
-  
- async create(createPersonDto: CreatePersonDto) {
-    try{
-      const userAlreadyExists = await this.prisma.user.findFirstOrThrow({
-        where:{cpf:createPersonDto.cpf}
-      })
-      if(userAlreadyExists.cpf){
-        return {
-          statusCode: 404,
-          message:"User already exists"
-        }
-      }
-      const user = await this.prisma.user.create({
-        data:createPersonDto
-      });
-    }
-    catch(err){
+  constructor(private prisma: PrismaService) { }
 
-    }
-    
-    
+  async create(createPersonDto: CreatePersonDto) {
+
+    const user = await this.prisma.user.create({
+      data: createPersonDto
+    });
+
+
     return user
-    
+
   }
 
   findAll() {
-    
+
     return `This action returns all person`;
   }
 
